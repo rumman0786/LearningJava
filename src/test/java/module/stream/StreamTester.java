@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -66,5 +67,12 @@ public class StreamTester {
 
         Assert.assertArrayEquals(StreamExample.getTaskNames(TASKS, taskNameMapper).toArray(), TASK_NAMES);
         Assert.assertArrayEquals(StreamExample.getTaskNames(TASKS, taskTypeMapper).toArray(), TASK_TYPES);
+    }
+
+    @Test
+    public void testTaskMap() {
+        Map<String, Task> taskMap = StreamExample.getTaskMap(TASKS);
+        Task task = new Task("Java", "CODING");
+        Assert.assertEquals(taskMap.get("Java"), task);
     }
 }

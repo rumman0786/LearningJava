@@ -1,5 +1,7 @@
 package module.stream;
 
+import java.util.Objects;
+
 /**
  * @author rumman
  * @since 8/25/18
@@ -27,5 +29,20 @@ public class Task {
 
     public void setTaskType(String taskType) {
         this.taskType = taskType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(getTaskName(), task.getTaskName()) &&
+                Objects.equals(getTaskType(), task.getTaskType());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getTaskName(), getTaskType());
     }
 }
