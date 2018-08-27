@@ -8,9 +8,9 @@ import java.util.Objects;
  */
 public class Task {
     private String taskName;
-    private String taskType;
+    private TaskType taskType;
 
-    public Task(String taskName, String taskType) {
+    public Task(String taskName, TaskType taskType) {
         this.taskName = taskName;
         this.taskType = taskType;
     }
@@ -23,11 +23,11 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public String getTaskType() {
+    public TaskType getTaskType() {
         return taskType;
     }
 
-    public void setTaskType(String taskType) {
+    public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
     }
 

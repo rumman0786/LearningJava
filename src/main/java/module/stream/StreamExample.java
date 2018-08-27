@@ -17,7 +17,7 @@ public class StreamExample {
                 .collect(Collectors.toList());
     }
 
-    public static List<String> getTaskNames(List<Task> tasks, Function<Task, String> propertyMapper) {
+    public static List<?> getTaskNames(List<Task> tasks, Function<Task, ?> propertyMapper) {
         return tasks.stream()
                 .map(propertyMapper)
                 .distinct()
