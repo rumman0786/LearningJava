@@ -73,4 +73,34 @@ public class StreamTester {
         Task task = new Task("Java", CODING);
         Assert.assertEquals(taskMap.get("Java"), task);
     }
+
+    @Test
+    public void testGroupTasks() {
+        Map<TaskType, List<Task>> taskMap = StreamExample.getGroupTasks(TASKS);
+        for (TaskType taskType: taskMap.keySet()) {
+            System.out.println(taskType + " :: " + taskMap.get(taskType));
+        }
+    }
+
+    @Test
+    public void testGroupCounts() {
+        Map<TaskType, Long> taskMap = StreamExample.getGroupCounts(TASKS);
+        for (TaskType taskType: taskMap.keySet()) {
+            System.out.println(taskType + " :: " + taskMap.get(taskType));
+        }
+    }
+
+    @Test
+    public void testPartitionByLength() {
+        Map<Boolean, List<Task>> taskMap = StreamExample.getPartitionByLength(TASKS);
+
+        System.out.println("LONG TASK NAMES :: " + taskMap.get(true));
+        System.out.println("SHORT TASK NAMES :: " + taskMap.get(false));
+
+    }
+
+    @Test
+    public void testAllTaskName() {
+        System.out.println("[" + StreamExample.getAllTaskNames(TASKS) + "]");
+    }
 }

@@ -45,4 +45,9 @@ public class Task {
 
         return Objects.hash(getTaskName(), getTaskType());
     }
+
+    @Override
+    public String toString() {
+        return taskName + " :: " + taskType;
+    }
 }
