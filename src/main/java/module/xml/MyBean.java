@@ -1,6 +1,7 @@
 package module.xml;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author rumman
@@ -12,26 +13,32 @@ public class MyBean implements Serializable {
 
     private boolean myBoolean;
     private String myString;
-//    private Vector<String> myVector;
+    private List<String> myList;
 
     public MyBean() {
     }
+
     public boolean isMyBoolean() {
         return myBoolean;
     }
+
     public void setMyBoolean(boolean myBoolean) {
         this.myBoolean = myBoolean;
     }
+
     public String getMyString() {
         return myString;
     }
+
     public void setMyString(String myString) {
         this.myString = myString;
     }
-//    public Vector<String> getMyVector() {
-//        return myVector;
-//    }
-//    public void setMyVector(Vector<String> myVector) {
-//        this.myVector = myVector;
-//    }
+
+    public List<String> getMyList() {
+        return myList;
+    }
+
+    public void setMyList(List<String> myList) {
+        this.myList = myList;
+    }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.5.0_09" class="java.beans.XMLDecoder">
+    <object class="module.xml.MyBean">
+        <void property="myBoolean">
+            <boolean>true</boolean>
+        </void>
+        <void property="myString">
+            <string>xml is cool</string>
+        </void>
+        <void property="myList">
+            <object class="java.util.ArrayList">
+                <void method="add">
+                    <string>one</string>
+                </void>
+                <void method="add">
+                    <string>two</string>
+                </void>
+                <void method="add">
+                    <string>three</string>
+                </void>
+            </object>
+        </void>
+    </object>
+</java>
