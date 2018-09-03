@@ -20,5 +20,21 @@
                 </void>
             </object>
         </void>
+        <void property="myMap">
+            <object class="java.util.HashMap">
+                <void method="put">
+                    <string>1</string>
+                    <string>one</string>
+                </void>
+                <void method="put">
+                    <string>2</string>
+                    <string>two</string>
+                </void>
+                <void method="put">
+                    <string>3</string>
+                    <string>three</string>
+                </void>
+            </object>
+        </void>
     </object>
 </java>

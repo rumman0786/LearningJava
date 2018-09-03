@@ -2,6 +2,7 @@ package module.xml;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author rumman
@@ -14,6 +15,7 @@ public class MyBean implements Serializable {
     private boolean myBoolean;
     private String myString;
     private List<String> myList;
+    private Map<String, String> myMap;
 
     public MyBean() {
     }
@@ -40,5 +42,13 @@ public class MyBean implements Serializable {
 
     public void setMyList(List<String> myList) {
         this.myList = myList;
+    }
+
+    public Map<String, String> getMyMap() {
+        return myMap;
+    }
+
+    public void setMyMap(Map<String, String> myMap) {
+        this.myMap = myMap;
     }
 }
