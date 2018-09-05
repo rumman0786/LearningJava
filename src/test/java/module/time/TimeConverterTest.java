@@ -1,10 +1,9 @@
 package module.time;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.chrono.MinguoDate;
 
 import static module.time.TimeConverter.*;
@@ -38,5 +37,29 @@ public class TimeConverterTest {
     public void testGetLocalDate() {
         System.out.println(MinguoDate.now());
         System.out.println(getLocalDate(MinguoDate.now()));
+    }
+
+    @Test
+    public void testFirstSunday() {
+        LocalDate firstSundaySeptember = LocalDate.of(2018, Month.SEPTEMBER, 2);
+        Assert.assertEquals(firstSundaySeptember, getFirstSunday(LocalDate.now()));
+    }
+
+    @Test
+    public void testLastThursday() {
+        LocalDate lastThursdaySeptember = LocalDate.of(2018, Month.SEPTEMBER, 27);
+        Assert.assertEquals(lastThursdaySeptember, getLastThursday(LocalDate.now()));
+    }
+
+    @Test
+    public void testIsLeapYear() {
+        Assert.assertFalse(isLeapYear(2018));
+        Assert.assertTrue(isLeapYear(2016));
+    }
+
+    @Test
+    public void testDayOfBirthday() {
+        Assert.assertNotEquals(DayOfWeek.TUESDAY, dayOfBirthDay(2018));
+        Assert.assertEquals(DayOfWeek.SATURDAY, dayOfBirthDay(2018));
     }
 }

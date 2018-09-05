@@ -1,10 +1,8 @@
 package module.time;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.chrono.MinguoDate;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * @author rumman
@@ -26,5 +24,22 @@ public class TimeConverter {
 
     public static LocalDate getLocalDate(MinguoDate minguoDate) {
         return LocalDate.from(minguoDate);
+    }
+
+    public static LocalDate getFirstSunday(LocalDate localDate) {
+        return localDate.with(TemporalAdjusters.firstInMonth(DayOfWeek.SUNDAY));
+    }
+
+    public static LocalDate getLastThursday(LocalDate localDate) {
+        return localDate.with(TemporalAdjusters.lastInMonth(DayOfWeek.THURSDAY));
+    }
+
+    public static boolean isLeapYear(int year) {
+        LocalDate leapYearCandidate = LocalDate.of(year, Month.FEBRUARY, 1);
+        return leapYearCandidate.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth() == 29;
+    }
+
+    public static DayOfWeek dayOfBirthDay(int year) {
+        return LocalDate.of(year, Month.NOVEMBER, 10).getDayOfWeek();
     }
 }
