@@ -62,4 +62,10 @@ public class TimeConverterTest {
         Assert.assertNotEquals(DayOfWeek.TUESDAY, dayOfBirthDay(2018));
         Assert.assertEquals(DayOfWeek.SATURDAY, dayOfBirthDay(2018));
     }
+
+    @Test
+    public void testNextBirthday() {
+        Assert.assertEquals(LocalDate.of(2018, Month.NOVEMBER, 10),
+                getNextBirthday(LocalDate.of(1990, Month.NOVEMBER, 10)));
+    }
 }

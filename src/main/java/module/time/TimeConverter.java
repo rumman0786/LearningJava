@@ -42,4 +42,16 @@ public class TimeConverter {
     public static DayOfWeek dayOfBirthDay(int year) {
         return LocalDate.of(year, Month.NOVEMBER, 10).getDayOfWeek();
     }
+
+    public static LocalDate getNextBirthday(LocalDate birthday) {
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate nextBirthday = birthday.withYear(currentDate.getYear());
+
+        if (nextBirthday.isEqual(currentDate) || nextBirthday.isBefore(currentDate)) {
+            nextBirthday = nextBirthday.plusYears(1);
+        }
+
+        return nextBirthday;
+    }
 }
