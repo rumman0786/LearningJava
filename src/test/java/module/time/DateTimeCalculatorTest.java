@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 /**
  * @author rumman
@@ -66,5 +67,39 @@ public class DateTimeCalculatorTest {
         System.out.println(String.format("Period.ofWeeks():: expected: [%02d], actual: [%02d]",
                 280, fromWeeks.getDays()));
         Assert.assertEquals(280, fromWeeks.getDays());
+    }
+
+    @Test
+    public void testPeriodMaths() {
+        LocalDate january = LocalDate.now().withDayOfYear(1);
+        LocalDate february = LocalDate.now().withMonth(2).withDayOfMonth(1);
+        Period period = Period.between(february, january);
+
+        Assert.assertTrue(period.isNegative());
+        Assert.assertEquals(january, february.minusMonths(1));
+        Assert.assertEquals(february, january.plusMonths(1));
+    }
+
+    @Test
+    public void testPeriodNormalization() {
+        Period twelveMonths = Period.ofMonths(12).withDays(13);
+        Period oneYear = Period.ofYears(1).withDays(13);
+
+        System.out.println(String.format("Period.normalized():: twelveMonths: [%s], oneYear: [%s]",
+                twelveMonths.normalized(), oneYear.normalized()));
+        Assert.assertEquals(twelveMonths.normalized(), oneYear.normalized());
+
+        System.out.println(String.format("Period.normalized().getDays():: twelveMonths: [%s], oneYear: [%s]",
+                twelveMonths.normalized().getDays(), oneYear.normalized().getDays()));
+        Assert.assertEquals(twelveMonths.normalized().getDays(), oneYear.normalized().getDays());
+
+        System.out.println(String.format("Period.normalized().toTotalMonths():: twelveMonths: [%s], oneYear: [%s]",
+                twelveMonths.normalized().toTotalMonths(), oneYear.normalized().toTotalMonths()));
+        Assert.assertEquals(twelveMonths.normalized().toTotalMonths(), oneYear.normalized().toTotalMonths());
+
+        System.out.println(String.format("Period.normalized().get(ChronoUnit.DAYS):: twelveMonths: [%s], oneYear: [%s]",
+                twelveMonths.normalized().get(ChronoUnit.DAYS), oneYear.normalized().get(ChronoUnit.DAYS)));
+        Assert.assertEquals(twelveMonths.normalized().get(ChronoUnit.DAYS), oneYear.normalized().get(ChronoUnit.DAYS));
+
     }
 }
