@@ -3,11 +3,8 @@ package module.time;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Period;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -119,5 +116,33 @@ public class DateTimeCalculatorTest {
        periods.forEach(period ->
                System.out.println(String.format("YEAR [%s], MONTH [%s], DAYS [%s]",
                        period.getYears(), period.getMonths(), period.getDays())));
+   }
+
+   @Test
+    public void testDuration() {
+       Instant start = Instant.parse("2017-10-03T10:15:30.00Z");
+       Instant end = Instant.parse("2017-10-03T10:16:30.00Z");
+       Duration duration = DateTimeCalculator.getDuration(start, end);
+
+       Assert.assertEquals(60, duration.getSeconds());
+
+       Duration oneDay = Duration.ofDays(1);
+       Assert.assertEquals(86400000000000L, oneDay.toNanos());
+       Assert.assertEquals(86400000, oneDay.toMillis());
+       Assert.assertEquals(86400, oneDay.getSeconds());
+       Assert.assertEquals(1440, oneDay.toMinutes());
+       Assert.assertEquals(24, oneDay.toHours());
+   }
+
+   @Test
+    public void testDurationMaths() {
+        Duration duration = Duration.ofHours(3);
+
+        Assert.assertEquals(180, duration.toMinutes());
+        Assert.assertEquals(200, duration.plusMinutes(20).toMinutes());
+        Assert.assertEquals(100, duration.minusMinutes(80).toMinutes());
+
+        Assert.assertEquals(6, duration.plus(duration).toHours());
+        Assert.assertEquals(4, duration.plus(1, ChronoUnit.HOURS).toHours());
    }
 }
