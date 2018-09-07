@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 
 /**
  * @author rumman
@@ -38,5 +39,32 @@ public class DateTimeCalculatorTest {
 
         Period expected4 = Period.of(0,1, 0);
         Assert.assertEquals(expected4, DateTimeCalculator.getPeriod(start4, end4));
+    }
+
+    @Test
+    public void testPeriodUnits() {
+        Period twenty24Months = Period.ofMonths(24);
+        Period twoYears = Period.of(2, 0 , 0);
+
+        System.out.println(String.format("Period:: twenty24Months: [%s], twoYears: [%s]",
+                twenty24Months, twoYears));
+        Assert.assertNotEquals(twenty24Months, twoYears);
+
+        System.out.println(String.format("get(ChronoUnit.DAYS):: twenty24Months: [%s], twoYears: [%s]",
+                twenty24Months.get(ChronoUnit.DAYS), twoYears.get(ChronoUnit.DAYS)));
+        Assert.assertEquals(twenty24Months.get(ChronoUnit.DAYS), twoYears.get(ChronoUnit.DAYS));
+
+        System.out.println(String.format("toTotalMonths():: twenty24Months: [%02d], twoYears: [%02d]",
+                twenty24Months.toTotalMonths(), twoYears.toTotalMonths()));
+        Assert.assertEquals(twenty24Months.toTotalMonths(), twoYears.toTotalMonths());
+
+        System.out.println(String.format("getDays():: twenty24Months: [%02d], twoYears: [%02d]",
+                twenty24Months.getDays(), twoYears.getDays()));
+        Assert.assertEquals(twenty24Months.getDays(), twoYears.getDays());
+
+        Period fromWeeks = Period.ofWeeks(40);
+        System.out.println(String.format("Period.ofWeeks():: expected: [%02d], actual: [%02d]",
+                280, fromWeeks.getDays()));
+        Assert.assertEquals(280, fromWeeks.getDays());
     }
 }
