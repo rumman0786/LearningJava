@@ -8,6 +8,8 @@ import java.time.Month;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author rumman
@@ -100,6 +102,22 @@ public class DateTimeCalculatorTest {
         System.out.println(String.format("Period.normalized().get(ChronoUnit.DAYS):: twelveMonths: [%s], oneYear: [%s]",
                 twelveMonths.normalized().get(ChronoUnit.DAYS), oneYear.normalized().get(ChronoUnit.DAYS)));
         Assert.assertEquals(twelveMonths.normalized().get(ChronoUnit.DAYS), oneYear.normalized().get(ChronoUnit.DAYS));
+   }
 
-    }
+   @Test
+   public void testPeriodSorting() {
+        List<Period> periods = Arrays.asList(
+                Period.of(5,2,1),
+                Period.of(2,6,10),
+                Period.of(4,11,11),
+                Period.of(1,6,2),
+                Period.of(4,0,5)
+        );
+
+       periods.sort(DateTimeCalculator.getPeriodComparator());
+
+       periods.forEach(period ->
+               System.out.println(String.format("YEAR [%s], MONTH [%s], DAYS [%s]",
+                       period.getYears(), period.getMonths(), period.getDays())));
+   }
 }

@@ -2,6 +2,7 @@ package module.time;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Comparator;
 
 /**
  * @author rumman
@@ -11,5 +12,11 @@ public class DateTimeCalculator {
 
     public static Period getPeriod(LocalDate start, LocalDate end) {
         return Period.between(start, end);
+    }
+
+    public static Comparator getPeriodComparator() {
+        return Comparator.comparing(Period::getYears)
+                .thenComparing(Period::getMonths)
+                .thenComparing(Period::getDays);
     }
 }
