@@ -14,7 +14,7 @@ public class DateTimeCalculator {
         return Period.between(start, end);
     }
 
-    public static Comparator getPeriodComparator() {
+    public static Comparator<Period> getPeriodComparator() {
         return Comparator.comparing(Period::getYears)
                 .thenComparing(Period::getMonths)
                 .thenComparing(Period::getDays);
