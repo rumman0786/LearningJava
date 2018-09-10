@@ -27,4 +27,10 @@ public class ComparatorProvider {
     public static Comparator<Developer> getReadableLambdaComparator() {
         return Comparator.comparing(Developer::getName);
     }
+
+    public static Comparator<Developer> getComparatorByNameAgeSalary() {
+        return Comparator.comparing(Developer::getName)
+                .thenComparing(Developer::getAge)
+                .thenComparing(Developer::getSalary);
+    }
 }

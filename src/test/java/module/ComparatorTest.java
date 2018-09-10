@@ -26,6 +26,8 @@ public class ComparatorTest {
         initDevels.add(new Developer("alvin", new BigDecimal("80000"), 20));
         initDevels.add(new Developer("jason", new BigDecimal("100000"), 10));
         initDevels.add(new Developer("iris", new BigDecimal("170000"), 55));
+        initDevels.add(new Developer("iris", new BigDecimal("170000"), 70));
+        initDevels.add(new Developer("iris", new BigDecimal("100000"), 30));
 
         developers = Collections.unmodifiableList(initDevels);
     }
@@ -45,5 +47,10 @@ public class ComparatorTest {
         Assert.assertArrayEquals(developersCloneListExpected2.toArray(), developersCloneListActual.toArray());
 
         developersCloneListActual.forEach(System.out::println);
+    }
+
+    public void testMultipleSort() {
+        developers.sort(ComparatorProvider.getComparatorByNameAgeSalary());
+        developers.forEach(System.out::println);
     }
 }
