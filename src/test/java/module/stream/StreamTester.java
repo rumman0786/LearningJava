@@ -103,4 +103,14 @@ public class StreamTester {
     public void testAllTaskName() {
         System.out.println("[" + StreamExample.getAllTaskNames(TASKS) + "]");
     }
+
+    @Test
+    public void testLimits() {
+        System.out.println("[" + StreamExample.getLimits() + "]");
+    }
+
+    @Test
+    public void testDistincts() {
+        System.out.println("[" + StreamExample.getDistincts() + "]");
+    }
 }

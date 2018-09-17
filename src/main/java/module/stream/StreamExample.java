@@ -1,5 +1,6 @@
 package module.stream;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -48,5 +49,25 @@ public class StreamExample {
         return tasks.stream()
                 .map(Task::getTaskName)
                 .collect(Collectors.joining(", "));
+    }
+
+    public static List<Integer> getLimits() {
+
+        List<Integer> integers = Arrays.asList(300, 12, 2, 3, 33, 76,56, 67);
+
+        return integers.stream()
+                .filter(i -> i % 2 == 0)
+                .limit(3)
+                .collect(Collectors.toList());
+    }
+
+    public static List<Integer> getDistincts() {
+
+        List<Integer> integers = Arrays.asList(300, 12, 12, 3, 33, 76,56, 67);
+
+        return integers.stream()
+                .filter(i -> i % 2 == 0)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
