@@ -4,9 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 import static module.stream.TaskType.BLOGGING;
@@ -112,5 +110,17 @@ public class StreamTester {
     @Test
     public void testDistincts() {
         System.out.println("[" + StreamExample.getDistincts() + "]");
+    }
+
+    @Test
+    public void testStreamStats() {
+        List<Integer> intList = Arrays.asList(1, 245, 32, 25, 75, 234, 8989, 44, 2);
+
+        IntSummaryStatistics intStats = intList.stream().mapToInt(x -> x).summaryStatistics();
+
+        System.out.println("Highest number: " + intStats.getMax());
+        System.out.println("Lowest number: " + intStats.getMin());
+        System.out.println("Summation: " + intStats.getSum());
+        System.out.println("Frequency: " + intStats.getCount());
     }
 }
