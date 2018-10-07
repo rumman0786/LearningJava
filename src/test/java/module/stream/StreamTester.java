@@ -122,5 +122,19 @@ public class StreamTester {
         System.out.println("Lowest number: " + intStats.getMin());
         System.out.println("Summation: " + intStats.getSum());
         System.out.println("Frequency: " + intStats.getCount());
+        System.out.println("Average: " + intStats.getAverage());
+
+        intStats.accept(-3000);
+        System.out.println("New Min: " + intStats.getMin());
+
+        List<Integer> otherIntList = Arrays.asList(31, 45, 132, 295, 7445, 2, 89, 4, 233);
+        IntSummaryStatistics intStatsOther = otherIntList.stream().mapToInt(x -> x).summaryStatistics();
+
+        intStats.combine(intStatsOther);
+        System.out.println("Highest number: " + intStats.getMax());
+        System.out.println("Lowest number: " + intStats.getMin());
+        System.out.println("Summation: " + intStats.getSum());
+        System.out.println("Frequency: " + intStats.getCount());
+        System.out.println("Average: " + intStats.getAverage());
     }
 }
