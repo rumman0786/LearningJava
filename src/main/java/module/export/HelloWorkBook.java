@@ -1,11 +1,13 @@
 package module.export;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -107,5 +109,48 @@ public class HelloWorkBook {
         }
 
         System.out.println(String.format("{%s} written successfully with sheet {%s}", filePath, sheetName));
+    }
+
+    public static void readWorkBookWithSheetContainingRowCell(String filePath, String sheetName) {
+
+        try {
+            FileInputStream fis = new FileInputStream(new File(filePath));
+
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+
+            XSSFSheet spreadsheet = workbook.getSheet(sheetName);
+
+            Iterator<Row> rowIterator = spreadsheet.iterator();
+
+            XSSFRow row;
+
+            while (rowIterator.hasNext()) {
+                row = (XSSFRow) rowIterator.next();
+                Iterator < Cell >  cellIterator = row.cellIterator();
+
+                while ( cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+
+                    switch (cell.getCellType()) {
+                        case NUMERIC:
+                            System.out.print(cell.getNumericCellValue() + " \t\t ");
+                            break;
+
+                        case STRING:
+                            System.out.print(cell.getStringCellValue() + " \t\t ");
+                            break;
+                    }
+                }
+
+                System.out.println();
+            }
+
+            fis.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was read successfully with sheet name {%s}", filePath, sheetName));
     }
 }

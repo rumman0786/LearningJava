@@ -41,4 +41,9 @@ public class HelloWorkBookTester {
         HelloWorkBook.createWorkBookWithSheetContainingRowCell(
                 "/home/rumman/testCreate3.xlsx", "Test Sheet Name", workSheetContent);
     }
+
+    @Test
+    public void readExcelWithSheetNameTest(){
+        HelloWorkBook.readWorkBookWithSheetContainingRowCell("/home/rumman/testCreate4.xlsx", "Test Sheet Name");
+    }
 }
