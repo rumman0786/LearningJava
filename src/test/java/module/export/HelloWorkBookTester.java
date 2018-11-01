@@ -14,13 +14,13 @@ import java.util.TreeMap;
 public class HelloWorkBookTester {
 
     @Test
-    public void openExcelTest(){
-        HelloWorkBook.openWorkBook("/home/rumman/test.xlsx");
-    }
-
-    @Test
     public void createExcelTest(){
         HelloWorkBook.createWorkBook("/home/rumman/testCreate.xlsx");
+    }
+
+    @Test(timeout = 5000L)
+    public void openExcelTest(){
+        HelloWorkBook.openWorkBook("/home/rumman/testCreate.xlsx");
     }
 
     @Test
@@ -42,8 +42,8 @@ public class HelloWorkBookTester {
                 "/home/rumman/testCreate3.xlsx", "Test Sheet Name", workSheetContent);
     }
 
-    @Test
+    @Test(timeout = 5000L)
     public void readExcelWithSheetNameTest(){
-        HelloWorkBook.readWorkBookWithSheetContainingRowCell("/home/rumman/testCreate4.xlsx", "Test Sheet Name");
+        HelloWorkBook.readWorkBookWithSheetContainingRowCell("/home/rumman/testCreate3.xlsx", "Test Sheet Name");
     }
 }

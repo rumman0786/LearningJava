@@ -7,7 +7,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -120,16 +119,9 @@ public class HelloWorkBook {
 
             XSSFSheet spreadsheet = workbook.getSheet(sheetName);
 
-            Iterator<Row> rowIterator = spreadsheet.iterator();
+            for (Row row : spreadsheet) {
 
-            XSSFRow row;
-
-            while (rowIterator.hasNext()) {
-                row = (XSSFRow) rowIterator.next();
-                Iterator < Cell >  cellIterator = row.cellIterator();
-
-                while ( cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
+                for (Cell cell : row) {
 
                     switch (cell.getCellType()) {
                         case NUMERIC:
