@@ -17,16 +17,10 @@ import java.util.Map;
 public class HelloWorkBook {
 
     public static void openWorkBook(String filePath) {
-        File file = new File(filePath);
-        FileInputStream fIP = null;
-        try {
-            fIP = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        //Get the workbook instance for XLSX file
-        try {
+        File file = new File(filePath);
+        try(FileInputStream fIP = new FileInputStream(file)) {
+            //Get the workbook instance for XLSX file
             XSSFWorkbook workbook = new XSSFWorkbook(fIP);
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,12 +34,9 @@ public class HelloWorkBook {
     }
 
     public static void createWorkBook(String filePath) {
-        XSSFWorkbook workbook = new XSSFWorkbook();
-
-        try {
-            FileOutputStream out = new FileOutputStream(new File(filePath));
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
             workbook.write(out);
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,16 +45,12 @@ public class HelloWorkBook {
     }
 
     public static void createWorkBookWithSheet(String filePath, String sheetName) {
-        XSSFWorkbook workbook = new XSSFWorkbook();
 
-        try {
-            FileOutputStream out = new FileOutputStream(new File(filePath));
-
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
             workbook.createSheet(sheetName);
-
             workbook.write(out);
 
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,17 +64,14 @@ public class HelloWorkBook {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
-        try {
-            FileOutputStream out = new FileOutputStream(new File(filePath));
-
+        try(FileOutputStream out = new FileOutputStream(new File(filePath))) {
             XSSFSheet sheet = workbook.createSheet(sheetName);
-
             XSSFRow row = null;
             int rowCount = 0;
 
             for (String key: workSheetContent.keySet()) {
-                row = sheet.createRow(rowCount);
 
+                row = sheet.createRow(rowCount);
                 int cellCount = 0;
 
                 for (String cellContent: workSheetContent.get(key)) {
@@ -102,7 +86,6 @@ public class HelloWorkBook {
 
             workbook.write(out);
 
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,17 +95,12 @@ public class HelloWorkBook {
 
     public static void readWorkBookWithSheetContainingRowCell(String filePath, String sheetName) {
 
-        try {
-            FileInputStream fis = new FileInputStream(new File(filePath));
-
+        try (FileInputStream fis = new FileInputStream(new File(filePath))) {
             XSSFWorkbook workbook = new XSSFWorkbook(fis);
-
             XSSFSheet spreadsheet = workbook.getSheet(sheetName);
 
             for (Row row : spreadsheet) {
-
                 for (Cell cell : row) {
-
                     switch (cell.getCellType()) {
                         case NUMERIC:
                             System.out.print(cell.getNumericCellValue() + " \t\t ");
@@ -133,11 +111,8 @@ public class HelloWorkBook {
                             break;
                     }
                 }
-
                 System.out.println();
             }
-
-            fis.close();
 
         } catch (IOException e) {
             e.printStackTrace();
