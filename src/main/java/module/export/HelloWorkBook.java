@@ -1,12 +1,9 @@
 package module.export;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.*;
 
 import java.io.*;
 import java.util.List;
@@ -22,14 +19,14 @@ public class HelloWorkBook {
     public static void openWorkBook(String filePath) {
 
         File file = new File(filePath);
-        try(FileInputStream fIP = new FileInputStream(file)) {
+        try (FileInputStream fIP = new FileInputStream(file)) {
             //Get the workbook instance for XLSX file
             XSSFWorkbook workbook = new XSSFWorkbook(fIP);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if(file.isFile() && file.exists()) {
+        if (file.isFile() && file.exists()) {
             System.out.println("openworkbook.xlsx file open successfully.");
         } else {
             System.out.println("Error to open openworkbook.xlsx file.");
@@ -67,17 +64,17 @@ public class HelloWorkBook {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
-        try(FileOutputStream out = new FileOutputStream(new File(filePath))) {
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
             XSSFSheet sheet = workbook.createSheet(sheetName);
             XSSFRow row = null;
             int rowCount = 0;
 
-            for (String key: workSheetContent.keySet()) {
+            for (String key : workSheetContent.keySet()) {
 
                 row = sheet.createRow(rowCount);
                 int cellCount = 0;
 
-                for (String cellContent: workSheetContent.get(key)) {
+                for (String cellContent : workSheetContent.get(key)) {
                     Cell cell = row.createCell(cellCount);
                     cell.setCellValue(cellContent);
 
@@ -173,7 +170,6 @@ public class HelloWorkBook {
             xssfRow4Cell0.setCellValue("BOOLEAN");
 
             XSSFCell xssfRow4Cell2 = row.createCell(1);
-            xssfRow4Cell2.setCellType(CellType.BOOLEAN);
             xssfRow4Cell2.setCellValue(true);
 
             row = spreadsheet.createRow(rowCount++);
@@ -186,6 +182,121 @@ public class HelloWorkBook {
             xssfRow5Cell2.setCellValue("#$%^&*((((%%%");
 
             workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    public static void createStyleCell(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(sheetName);
+
+            int rowIndex = 1;
+            short height = 800;
+
+            XSSFRow row = spreadsheet.createRow(rowIndex);
+            row.setHeight(height);
+
+            XSSFCell cell = row.createCell(1);
+            cell.setCellValue("test of merging");
+
+            spreadsheet.addMergedRegion(new CellRangeAddress(rowIndex, rowIndex, 1, 4));
+
+            rowIndex = 5;
+            row = spreadsheet.createRow(rowIndex);
+            cell = row.createCell(0);
+            row.setHeight(height);
+
+            // Top Left alignment
+            XSSFCellStyle style1 = workbook.createCellStyle();
+            spreadsheet.setColumnWidth(0, 8000);
+            style1.setAlignment(HorizontalAlignment.LEFT);
+            style1.setVerticalAlignment(VerticalAlignment.TOP);
+            cell.setCellValue("Top Left");
+            cell.setCellStyle(style1);
+
+            rowIndex = 6;
+            row = spreadsheet.createRow(rowIndex);
+            cell = row.createCell(1);
+            row.setHeight(height);
+
+            // Center Align Cell Contents
+            XSSFCellStyle style2 = workbook.createCellStyle();
+            style2.setAlignment(HorizontalAlignment.CENTER);
+            style2.setVerticalAlignment(VerticalAlignment.CENTER);
+            cell.setCellValue("Center Aligned");
+            cell.setCellStyle(style2);
+
+            row = spreadsheet.createRow(7);
+            cell = row.createCell(2);
+            row.setHeight(height);
+
+            // Bottom Right alignment
+            XSSFCellStyle style3 = workbook.createCellStyle();
+            style3.setAlignment(HorizontalAlignment.RIGHT);
+            style3.setVerticalAlignment(VerticalAlignment.BOTTOM);
+            cell.setCellValue("Bottom Right");
+            cell.setCellStyle(style3);
+
+            rowIndex = 8;
+            row = spreadsheet.createRow(rowIndex);
+            cell = row.createCell(3);
+
+            // Justified Alignment
+            XSSFCellStyle style4 = workbook.createCellStyle();
+            style4.setAlignment(HorizontalAlignment.JUSTIFY);
+            style4.setVerticalAlignment(VerticalAlignment.JUSTIFY);
+            cell.setCellValue("Contents are Justified in Alignment");
+            cell.setCellStyle(style4);
+
+            rowIndex = 10;
+            row = spreadsheet.createRow(rowIndex);
+            row.setHeight(height);
+            cell = row.createCell(1);
+            cell.setCellValue("BORDER");
+
+            XSSFCellStyle style5 = workbook.createCellStyle();
+            style5.setBorderBottom(BorderStyle.THICK);
+            style5.setBottomBorderColor(IndexedColors.BLUE.getIndex());
+            style5.setBorderLeft(BorderStyle.DOUBLE);
+            style5.setLeftBorderColor(IndexedColors.GREEN.getIndex());
+            style5.setBorderRight(BorderStyle.HAIR);
+            style5.setRightBorderColor(IndexedColors.RED.getIndex());
+            style5.setBorderTop(BorderStyle.SLANTED_DASH_DOT);
+            style5.setTopBorderColor(IndexedColors.CORAL.getIndex());
+            cell.setCellStyle(style5);
+
+
+            rowIndex = 11;
+            row = spreadsheet.createRow(rowIndex);
+            cell = row.createCell(1);
+
+            XSSFCellStyle style6 = workbook.createCellStyle();
+            style6.setFillBackgroundColor(HSSFColor.HSSFColorPredefined.LEMON_CHIFFON.getIndex2());
+            style6.setFillPattern(FillPatternType.LESS_DOTS);
+            style6.setAlignment(HorizontalAlignment.FILL);
+            spreadsheet.setColumnWidth(1, 8000);
+            cell.setCellValue("FILL BACKGROUNG/FILL PATTERN");
+            cell.setCellStyle(style6);
+
+            rowIndex = 12;
+            row = spreadsheet.createRow(rowIndex);
+            cell = row.createCell(1);
+
+            XSSFCellStyle style7 = workbook.createCellStyle();
+            style7.setFillForegroundColor(HSSFColor.HSSFColorPredefined.BLUE.getIndex2());
+            style7.setFillPattern(FillPatternType.LESS_DOTS);
+            style7.setAlignment(HorizontalAlignment.FILL);
+            cell.setCellValue("FILL FOREGROUND/FILL PATTERN");
+            cell.setCellStyle(style7);
+
+            workbook.write(out);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
