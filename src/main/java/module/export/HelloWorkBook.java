@@ -271,7 +271,6 @@ public class HelloWorkBook {
             style5.setTopBorderColor(IndexedColors.CORAL.getIndex());
             cell.setCellStyle(style5);
 
-
             rowIndex = 11;
             row = spreadsheet.createRow(rowIndex);
             cell = row.createCell(1);
@@ -294,6 +293,35 @@ public class HelloWorkBook {
             style7.setAlignment(HorizontalAlignment.FILL);
             cell.setCellValue("FILL FOREGROUND/FILL PATTERN");
             cell.setCellStyle(style7);
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    public static void createFontStyleCell(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet(sheetName);
+
+            XSSFFont font = workbook.createFont();
+            font.setFontName("IMPACT");
+            font.setFontHeightInPoints((short) 14);
+            font.setItalic(true);
+            font.setColor(IndexedColors.BLACK.getIndex());
+
+            XSSFCellStyle style = workbook.createCellStyle();
+            style.setFont(font);
+
+            XSSFRow row = sheet.createRow(1);
+            XSSFCell cell = row.createCell(1);
+            cell.setCellValue("Font Style");
+            cell.setCellStyle(style);
 
             workbook.write(out);
 

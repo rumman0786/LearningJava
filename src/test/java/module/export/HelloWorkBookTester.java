@@ -56,4 +56,9 @@ public class HelloWorkBookTester {
     public void createStyleCellTest(){
         HelloWorkBook.createStyleCell("/home/rumman/testCreateCellStyles.xlsx", "Cell Styles");
     }
+
+    @Test
+    public void createFontStyleCellTest(){
+        HelloWorkBook.createFontStyleCell("/home/rumman/testCreateFontCellStyles.xlsx", "Cell With Font Styles");
+    }
 }
