@@ -331,4 +331,42 @@ public class HelloWorkBook {
 
         System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
     }
+
+    public static void textDirection(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet(sheetName);
+            XSSFRow row = sheet.createRow(1);
+
+            makeTextRotatingCell(workbook, row, 0, 1, "0D angle");
+            makeTextRotatingCell(workbook, row, 30, 3, "30D angle");
+            makeTextRotatingCell(workbook, row, 60, 6, "60D angle");
+            makeTextRotatingCell(workbook, row, 90, 9, "90D angle");
+            makeTextRotatingCell(workbook, row, 120, 12, "120D angle");
+            makeTextRotatingCell(workbook, row, 180, 15, "1800D angle");
+            makeTextRotatingCell(workbook, row, 270, 18, "270D angle");
+            makeTextRotatingCell(workbook, row, 360, 21, "360D angle");
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    private static void makeTextRotatingCell(XSSFWorkbook workbook,
+                                      XSSFRow row,
+                                      int rotationAngle,
+                                      int cellIndex,
+                                      String cellValue) {
+
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setRotation((short) rotationAngle);
+        XSSFCell cell = row.createCell(cellIndex);
+        cell.setCellValue(cellValue);
+        cell.setCellStyle(style);
+    }
 }
