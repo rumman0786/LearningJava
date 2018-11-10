@@ -369,4 +369,60 @@ public class HelloWorkBook {
         cell.setCellValue(cellValue);
         cell.setCellStyle(style);
     }
+
+        public static void formulaCell(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(sheetName);
+            XSSFRow row = spreadsheet.createRow(1);
+
+            XSSFCell cell = row.createCell(0);
+            cell.setCellValue("A = ");
+
+            cell = row.createCell(1);
+            cell.setCellValue(2);
+
+            row = spreadsheet.createRow(2);
+            cell = row.createCell(0);
+            cell.setCellValue("B = ");
+            cell = row.createCell(1);
+            cell.setCellValue(4);
+
+            createFormulaCell(workbook, spreadsheet, 3, "Total = ", "SUM(B2:B3)", "SUM(B2:B3)");
+            createFormulaCell(workbook, spreadsheet, 4, "POWER = ", "POWER(B2,B3)", "POWER(B2,B3)");
+            createFormulaCell(workbook, spreadsheet, 5, "MAX = ", "MAX(B2,B3)", "MAX(B2,B3)");
+            createFormulaCell(workbook, spreadsheet, 6, "FACT = ", "FACT(B3)", "FACT(B3)");
+            createFormulaCell(workbook, spreadsheet, 6, "SQRT = ", "SQRT(B3)", "SQRT(B3)");
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    private static void createFormulaCell(XSSFWorkbook workbook,
+                                          XSSFSheet sheet,
+                                          int rowIndex,
+                                          String ... cellValue) {
+
+        XSSFRow row = sheet.createRow(rowIndex);
+
+        int cellIndex = 0;
+        XSSFCell cell = row.createCell(rowIndex);
+        cell = row.createCell(cellIndex);
+        cell.setCellValue(cellValue[0]);
+
+        cellIndex += 1;
+        cell = row.createCell(cellIndex);
+        cell.setCellType(CellType.FORMULA);
+        cell.setCellFormula(cellValue[1]);
+
+        cellIndex += 1;
+        cell = row.createCell(cellIndex);
+        cell.setCellValue(cellValue[2]);
+    }
 }

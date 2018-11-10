@@ -66,4 +66,9 @@ public class HelloWorkBookTester {
     public void textDirectionTest(){
         HelloWorkBook.textDirection("/home/rumman/testTextDirection.xlsx", "Cell Text Direction Styles");
     }
+
+    @Test
+    public void formulaCellTest(){
+        HelloWorkBook.formulaCell("/home/rumman/testformulaCell.xlsx", "Formula Cell");
+    }
 }
