@@ -1,5 +1,6 @@
 package module.export;
 
+import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -9,6 +10,8 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import static org.apache.poi.common.usermodel.HyperlinkType.*;
 
 /**
  * @author rumman
@@ -422,5 +425,52 @@ public class HelloWorkBook {
         cellIndex += 1;
         cell = row.createCell(cellIndex);
         cell.setCellValue(cellValue[2]);
+    }
+
+    public static void createHyperLink(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(sheetName);
+            XSSFCellStyle cellStyle = workbook.createCellStyle();
+            XSSFFont hlinkfont = workbook.createFont();
+            hlinkfont.setUnderline(XSSFFont.U_SINGLE);
+            hlinkfont.setColor(IndexedColors.BLUE.getIndex());
+            cellStyle.setFont(hlinkfont);
+
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            createLinkCell(createHelper, spreadsheet, 0, 1,
+                    "URL Link", "http://www.tutorialspoint.com/", URL, cellStyle);
+            createLinkCell(createHelper, spreadsheet, 1, 1,
+                    "File Link", "/home/rumman/testformulaCell.xlsx", FILE, cellStyle);
+            createLinkCell(createHelper, spreadsheet, 2, 1,
+                    "Email Link", "mailto:contact@tutorialspoint.com?subject=Hyperlink", EMAIL, cellStyle);
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    private static void createLinkCell(CreationHelper createHelper,
+                                       XSSFSheet spreadsheet,
+                                       int rowIndex,
+                                       int cellIndex,
+                                       String cellValue,
+                                       String cellAddress,
+                                       HyperlinkType hyperlinkType,
+                                       XSSFCellStyle hlinkstyle) {
+
+        XSSFCell cell = spreadsheet.createRow(rowIndex).createCell(cellIndex);
+        cell.setCellValue(cellValue);
+        cell.setCellStyle(hlinkstyle);
+
+        XSSFHyperlink link = (XSSFHyperlink) createHelper.createHyperlink(hyperlinkType);
+        link.setAddress(cellAddress);
+        cell.setHyperlink(link);
     }
 }

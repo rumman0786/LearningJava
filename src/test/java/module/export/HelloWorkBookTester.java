@@ -71,4 +71,9 @@ public class HelloWorkBookTester {
     public void formulaCellTest(){
         HelloWorkBook.formulaCell("/home/rumman/testformulaCell.xlsx", "Formula Cell");
     }
+
+    @Test
+    public void createHyperLinkTest(){
+        HelloWorkBook.createHyperLink("/home/rumman/testCreateHyperLink.xlsx", "HyperLink Cell");
+    }
 }
