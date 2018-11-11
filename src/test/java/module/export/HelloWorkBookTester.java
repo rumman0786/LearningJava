@@ -56,4 +56,19 @@ public class HelloWorkBookTester {
     public void createStyleCellTest(){
         HelloWorkBook.createStyleCell("/home/rumman/testCreateCellStyles.xlsx", "Cell Styles");
     }
+
+    @Test
+    public void createFontStyleCellTest(){
+        HelloWorkBook.createFontStyleCell("/home/rumman/testCreateFontCellStyles.xlsx", "Cell With Font Styles");
+    }
+
+    @Test
+    public void textDirectionTest(){
+        HelloWorkBook.textDirection("/home/rumman/testTextDirection.xlsx", "Cell Text Direction Styles");
+    }
+
+    @Test
+    public void formulaCellTest(){
+        HelloWorkBook.formulaCell("/home/rumman/testformulaCell.xlsx", "Formula Cell");
+    }
 }

@@ -199,8 +199,8 @@ public class HelloWorkBook {
             int rowIndex = 1;
             short height = 800;
 
-            XSSFRow row = spreadsheet.createRow((short) rowIndex);
-            row.setHeight((short) 800);
+            XSSFRow row = spreadsheet.createRow(rowIndex);
+            row.setHeight(height);
 
             XSSFCell cell = row.createCell(1);
             cell.setCellValue("test of merging");
@@ -271,7 +271,6 @@ public class HelloWorkBook {
             style5.setTopBorderColor(IndexedColors.CORAL.getIndex());
             cell.setCellStyle(style5);
 
-
             rowIndex = 11;
             row = spreadsheet.createRow(rowIndex);
             cell = row.createCell(1);
@@ -296,12 +295,134 @@ public class HelloWorkBook {
             cell.setCellStyle(style7);
 
             workbook.write(out);
-            out.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    public static void createFontStyleCell(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet(sheetName);
+
+            XSSFFont font = workbook.createFont();
+            font.setFontName("IMPACT");
+            font.setFontHeightInPoints((short) 14);
+            font.setItalic(true);
+            font.setColor(IndexedColors.BLACK.getIndex());
+
+            XSSFCellStyle style = workbook.createCellStyle();
+            style.setFont(font);
+
+            XSSFRow row = sheet.createRow(1);
+            XSSFCell cell = row.createCell(1);
+            cell.setCellValue("Font Style");
+            cell.setCellStyle(style);
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    public static void textDirection(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet(sheetName);
+            XSSFRow row = sheet.createRow(1);
+
+            makeTextRotatingCell(workbook, row, 0, 1, "0D angle");
+            makeTextRotatingCell(workbook, row, 30, 3, "30D angle");
+            makeTextRotatingCell(workbook, row, 60, 6, "60D angle");
+            makeTextRotatingCell(workbook, row, 90, 9, "90D angle");
+            makeTextRotatingCell(workbook, row, 120, 12, "120D angle");
+            makeTextRotatingCell(workbook, row, 180, 15, "1800D angle");
+            makeTextRotatingCell(workbook, row, 270, 18, "270D angle");
+            makeTextRotatingCell(workbook, row, 360, 21, "360D angle");
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    private static void makeTextRotatingCell(XSSFWorkbook workbook,
+                                      XSSFRow row,
+                                      int rotationAngle,
+                                      int cellIndex,
+                                      String cellValue) {
+
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setRotation((short) rotationAngle);
+        XSSFCell cell = row.createCell(cellIndex);
+        cell.setCellValue(cellValue);
+        cell.setCellStyle(style);
+    }
+
+        public static void formulaCell(String filePath, String sheetName) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(sheetName);
+            XSSFRow row = spreadsheet.createRow(1);
+
+            XSSFCell cell = row.createCell(0);
+            cell.setCellValue("A = ");
+
+            cell = row.createCell(1);
+            cell.setCellValue(2);
+
+            row = spreadsheet.createRow(2);
+            cell = row.createCell(0);
+            cell.setCellValue("B = ");
+            cell = row.createCell(1);
+            cell.setCellValue(4);
+
+            createFormulaCell(workbook, spreadsheet, 3, "Total = ", "SUM(B2:B3)", "SUM(B2:B3)");
+            createFormulaCell(workbook, spreadsheet, 4, "POWER = ", "POWER(B2,B3)", "POWER(B2,B3)");
+            createFormulaCell(workbook, spreadsheet, 5, "MAX = ", "MAX(B2,B3)", "MAX(B2,B3)");
+            createFormulaCell(workbook, spreadsheet, 6, "FACT = ", "FACT(B3)", "FACT(B3)");
+            createFormulaCell(workbook, spreadsheet, 6, "SQRT = ", "SQRT(B3)", "SQRT(B3)");
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
+
+    private static void createFormulaCell(XSSFWorkbook workbook,
+                                          XSSFSheet sheet,
+                                          int rowIndex,
+                                          String ... cellValue) {
+
+        XSSFRow row = sheet.createRow(rowIndex);
+
+        int cellIndex = 0;
+        XSSFCell cell = row.createCell(rowIndex);
+        cell = row.createCell(cellIndex);
+        cell.setCellValue(cellValue[0]);
+
+        cellIndex += 1;
+        cell = row.createCell(cellIndex);
+        cell.setCellType(CellType.FORMULA);
+        cell.setCellFormula(cellValue[1]);
+
+        cellIndex += 1;
+        cell = row.createCell(cellIndex);
+        cell.setCellValue(cellValue[2]);
     }
 }
