@@ -358,10 +358,10 @@ public class HelloWorkBook {
     }
 
     private static void makeTextRotatingCell(XSSFWorkbook workbook,
-                                      XSSFRow row,
-                                      int rotationAngle,
-                                      int cellIndex,
-                                      String cellValue) {
+                                             XSSFRow row,
+                                             int rotationAngle,
+                                             int cellIndex,
+                                             String cellValue) {
 
         XSSFCellStyle style = workbook.createCellStyle();
         style.setRotation((short) rotationAngle);
@@ -370,7 +370,7 @@ public class HelloWorkBook {
         cell.setCellStyle(style);
     }
 
-        public static void formulaCell(String filePath, String sheetName) {
+    public static void formulaCell(String filePath, String sheetName) {
 
         try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
             XSSFWorkbook workbook = new XSSFWorkbook();
@@ -389,11 +389,11 @@ public class HelloWorkBook {
             cell = row.createCell(1);
             cell.setCellValue(4);
 
-            createFormulaCell(workbook, spreadsheet, 3, "Total = ", "SUM(B2:B3)", "SUM(B2:B3)");
-            createFormulaCell(workbook, spreadsheet, 4, "POWER = ", "POWER(B2,B3)", "POWER(B2,B3)");
-            createFormulaCell(workbook, spreadsheet, 5, "MAX = ", "MAX(B2,B3)", "MAX(B2,B3)");
-            createFormulaCell(workbook, spreadsheet, 6, "FACT = ", "FACT(B3)", "FACT(B3)");
-            createFormulaCell(workbook, spreadsheet, 6, "SQRT = ", "SQRT(B3)", "SQRT(B3)");
+            createFormulaCell(spreadsheet, 3, "Total = ", "SUM(B2:B3)", "SUM(B2:B3)");
+            createFormulaCell(spreadsheet, 4, "POWER = ", "POWER(B2,B3)", "POWER(B2,B3)");
+            createFormulaCell(spreadsheet, 5, "MAX = ", "MAX(B2,B3)", "MAX(B2,B3)");
+            createFormulaCell(spreadsheet, 6, "FACT = ", "FACT(B3)", "FACT(B3)");
+            createFormulaCell(spreadsheet, 6, "SQRT = ", "SQRT(B3)", "SQRT(B3)");
 
             workbook.write(out);
 
@@ -404,16 +404,14 @@ public class HelloWorkBook {
         System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
     }
 
-    private static void createFormulaCell(XSSFWorkbook workbook,
-                                          XSSFSheet sheet,
+    private static void createFormulaCell(XSSFSheet sheet,
                                           int rowIndex,
-                                          String ... cellValue) {
+                                          String... cellValue) {
 
         XSSFRow row = sheet.createRow(rowIndex);
 
         int cellIndex = 0;
-        XSSFCell cell = row.createCell(rowIndex);
-        cell = row.createCell(cellIndex);
+        XSSFCell cell = row.createCell(cellIndex);
         cell.setCellValue(cellValue[0]);
 
         cellIndex += 1;
