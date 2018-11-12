@@ -13,6 +13,16 @@ import java.util.TreeMap;
  */
 public class HelloWorkBookTester {
 
+    private static final Map<String, List<String>> WORK_SHEET_CONTENT = new TreeMap<>();
+
+    static {
+        WORK_SHEET_CONTENT.put("One", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
+        WORK_SHEET_CONTENT.put("Two", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
+        WORK_SHEET_CONTENT.put("Three", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
+        WORK_SHEET_CONTENT.put("Four", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
+        WORK_SHEET_CONTENT.put("Five", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
+    }
+
     @Test
     public void createExcelTest(){
         HelloWorkBook.createWorkBook("/home/rumman/testCreate.xlsx");
@@ -30,16 +40,8 @@ public class HelloWorkBookTester {
 
     @Test
     public void createExcelWithRowCellTest(){
-        Map<String, List<String>> workSheetContent = new TreeMap<>();
-
-        workSheetContent.put("One", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
-        workSheetContent.put("Two", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
-        workSheetContent.put("Three", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
-        workSheetContent.put("Four", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
-        workSheetContent.put("Five", Arrays.asList("Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text", "Dummy Text"));
-
         HelloWorkBook.createWorkBookWithSheetContainingRowCell(
-                "/home/rumman/testCreate3.xlsx", "Test Sheet Name", workSheetContent);
+                "/home/rumman/testCreate3.xlsx", "Test Sheet Name", WORK_SHEET_CONTENT);
     }
 
     @Test(timeout = 5000L)
