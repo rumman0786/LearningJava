@@ -78,4 +78,9 @@ public class HelloWorkBookTester {
     public void createHyperLinkTest(){
         HelloWorkBook.createHyperLink("/home/rumman/testCreateHyperLink.xlsx", "HyperLink Cell");
     }
+
+    @Test
+    public void createPrintableExcelTest(){
+        HelloWorkBook.createPrintableExcel("/home/rumman/testPrintableExcel.xlsx", "Printable Excel Cell", WORK_SHEET_CONTENT);
+    }
 }

@@ -7,7 +7,4 @@ Links:
 - [Apache POI – Fonts | Tutorialspoint](https://www.tutorialspoint.com/apache_poi/apache_poi_fonts.htm)
 - [Apache POI – Formula | Tutorialspoint](https://www.tutorialspoint.com/apache_poi/apache_poi_formula.htm)
 - [Apache POI – Hyperlink | Tutorialspoint](https://www.tutorialspoint.com/apache_poi/apache_poi_hyperlink.htm)
-
-
-
-
+- [Apache POI – Print Area | Tutorialspoint](https://www.tutorialspoint.com/apache_poi/apache_poi_print_area.htm)

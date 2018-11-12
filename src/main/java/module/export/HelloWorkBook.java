@@ -473,4 +473,47 @@ public class HelloWorkBook {
         link.setAddress(cellAddress);
         cell.setHyperlink(link);
     }
+
+    public static void createPrintableExcel(String filePath,
+                                            String sheetName,
+                                            Map<String, List<String>> workSheetContent) {
+
+        try (FileOutputStream out = new FileOutputStream(new File(filePath))) {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet(sheetName);
+
+            XSSFRow row = null;
+            int rowCount = 0;
+
+            for (String key : workSheetContent.keySet()) {
+
+                row = spreadsheet.createRow(rowCount);
+                int cellCount = 0;
+
+                for (String cellContent : workSheetContent.get(key)) {
+                    Cell cell = row.createCell(cellCount);
+                    cell.setCellValue(cellContent);
+
+                    cellCount++;
+                }
+
+                rowCount++;
+            }
+
+            workbook.setPrintArea(0, 0, 3, 0, 3);
+
+            spreadsheet.getPrintSetup().setPaperSize(XSSFPrintSetup.A4_PAPERSIZE);
+
+            spreadsheet.setDisplayGridlines(true);
+
+            spreadsheet.setPrintGridlines(false);
+
+            workbook.write(out);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("{%s} file was created successfully with sheet name {%s}", filePath, sheetName));
+    }
 }
