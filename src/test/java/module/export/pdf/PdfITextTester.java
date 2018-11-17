@@ -4,6 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 /**
  * @author rumman
@@ -38,6 +42,37 @@ public class PdfITextTester {
         PdfITextGenerator.createMaxPDF(filePath, paragraphContent, 14400f, 14400f);
 
         Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void createLetterPDFTest() {
+        String filePath = "/home/rumman/pdf/testLetterPDFDocument.pdf";
+        PdfITextGenerator.createLetterPDF(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void createLetterLandscapePDFTest() {
+        String filePath = "/home/rumman/pdf/testLetterLandscape.pdf";
+        PdfITextGenerator.createLetterLandscapePDF(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    private String getContent() {
+        String filePath = "./src/main/resources/dummyContent.txt";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+
+            stream.forEach(stringBuilder::append);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stringBuilder.toString();
     }
 }
 

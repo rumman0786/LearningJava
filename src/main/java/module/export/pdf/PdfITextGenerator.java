@@ -1,9 +1,6 @@
 package module.export.pdf;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.FileNotFoundException;
@@ -69,6 +66,32 @@ public class PdfITextGenerator {
         try {
             writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
             writer.setUserunit(75f);
+
+            document.open();
+            document.add(new Paragraph(paragraphContent));
+            document.close();
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createLetterPDF(String filePath, String paragraphContent) {
+        createLetterPDF(filePath, paragraphContent, PageSize.LETTER);
+    }
+
+    public static void createLetterLandscapePDF(String filePath, String paragraphContent) {
+        createLetterPDF(filePath, paragraphContent, PageSize.LETTER.rotate());
+    }
+
+    public static void createLetterPDF(String filePath, String paragraphContent, Rectangle rectangle) {
+
+        Document document = new Document(rectangle);
+        PdfWriter writer = null;
+
+        try {
+            writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
             document.open();
             document.add(new Paragraph(paragraphContent));
