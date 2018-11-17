@@ -1,6 +1,9 @@
 package module.export.pdf;
 
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.File;
 
 /**
  * @author rumman
@@ -10,20 +13,31 @@ public class PdfITextTester {
 
     @Test
     public void createPDFTest() {
-        PdfITextGenerator.createParagraphPDF("/home/rumman/pdf/testCreate.pdf");
+        String filePath = "/home/rumman/pdf/testCreate.pdf";
+        PdfITextGenerator.createParagraphPDF(filePath);
+
+        Assert.assertTrue(new File(filePath).exists());
     }
 
     @Test
     public void createBlankPDFTest() {
         String paragraphContent = "Hello World! Hello People! Hello Sky! Hello Sun! Hello Moon! Hello Stars!";
-        PdfITextGenerator.createParagraphPDFCustomParams("/home/rumman/pdf/testCustomPageDocument.pdf", paragraphContent,
+        String filePath = "/home/rumman/pdf/testCustomPageDocument.pdf";
+
+        PdfITextGenerator.createParagraphPDFCustomParams(filePath, paragraphContent,
                 216f, 720f, 36f, 72f, 108f, 180f);
+
+        Assert.assertTrue(new File(filePath).exists());
     }
 
     @Test
     public void createMaxPDFTest() {
         String paragraphContent = "Hello World! Hello People! Hello Sky! Hello Sun! Hello Moon! Hello Stars!";
-        PdfITextGenerator.createMaxPDF("/home/rumman/pdf/testMaxPDFDocument.pdf", paragraphContent, 14400f, 14400f);
+
+        String filePath = "/home/rumman/pdf/testMaxPDFDocument.pdf";
+        PdfITextGenerator.createMaxPDF(filePath, paragraphContent, 14400f, 14400f);
+
+        Assert.assertTrue(new File(filePath).exists());
     }
 }
 

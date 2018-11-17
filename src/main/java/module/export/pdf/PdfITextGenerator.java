@@ -27,11 +27,10 @@ public class PdfITextGenerator {
             document.add(new Paragraph("Hello World!"));
             document.close();
 
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
-
-        System.out.println(String.format("{%s} PDF written successfully.", filePath));
     }
 
     public static void createParagraphPDFCustomParams(String filePath, String paragraphContent,
@@ -49,11 +48,10 @@ public class PdfITextGenerator {
             document.add(new Paragraph(paragraphContent));
             document.close();
 
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
         } catch (IOException | DocumentException e) {
             e.printStackTrace();
         }
-
-        System.out.println(String.format("{%s} PDF written successfully.", filePath));
     }
 
 
@@ -75,10 +73,10 @@ public class PdfITextGenerator {
             document.open();
             document.add(new Paragraph(paragraphContent));
             document.close();
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        System.out.println(String.format("{%s} PDF written successfully.", filePath));
     }
 }
