@@ -85,7 +85,11 @@ public class PdfITextGenerator {
         createLetterPDF(filePath, paragraphContent, PageSize.LETTER.rotate());
     }
 
-    public static void createLetterPDF(String filePath, String paragraphContent, Rectangle rectangle) {
+    public static void createLetterLandscapeAltPDF(String filePath, float upperRightX, float upperRightY, String paragraphContent) {
+        createLetterPDF(filePath, paragraphContent, new Rectangle(792, 612));
+    }
+
+    private static void createLetterPDF(String filePath, String paragraphContent, Rectangle rectangle) {
 
         Document document = new Document(rectangle);
         PdfWriter writer = null;
@@ -95,6 +99,42 @@ public class PdfITextGenerator {
 
             document.open();
             document.add(new Paragraph(paragraphContent));
+            document.close();
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createSideMarginedPDF(String filePath, String paragraphContent) {
+        Document document = new Document();
+        document.setPageSize(PageSize.A5);
+        document.setMargins(36, 72, 108, 180);
+        document.setMarginMirroring(true);
+
+        createMarginedPDF(filePath, paragraphContent, document);
+    }
+
+    public static void createTopBottomMarginedPDF(String filePath, String paragraphContent) {
+        Document document = new Document();
+        document.setPageSize(PageSize.A5);
+        document.setMargins(36, 72, 108, 180);
+        document.setMarginMirroringTopBottom(true);
+
+        createMarginedPDF(filePath, paragraphContent, document);
+    }
+
+    private static void createMarginedPDF(String filePath, String paragraphContent, Document document) {
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+            document.open();
+
+            Paragraph paragraph = new Paragraph(paragraphContent);
+            paragraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            document.add(paragraph);
+
             document.close();
 
             System.out.println(String.format("{%s} PDF written successfully.", filePath));

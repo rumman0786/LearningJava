@@ -60,6 +60,30 @@ public class PdfITextTester {
         Assert.assertTrue(new File(filePath).exists());
     }
 
+    @Test
+    public void createLetterLandscapeAltPDFTest() {
+        String filePath = "/home/rumman/pdf/testLetterLandscapeAlt.pdf";
+        PdfITextGenerator.createLetterLandscapeAltPDF(filePath, 792f, 612f, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void createSideMarginedPDFTest() {
+        String filePath = "/home/rumman/pdf/testSideMarginedDocument.pdf";
+        PdfITextGenerator.createSideMarginedPDF(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void createTopBottomMarginedPDFTest() {
+        String filePath = "/home/rumman/pdf/testTopBottomMarginedDocument.pdf";
+        PdfITextGenerator.createTopBottomMarginedPDF(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
     private String getContent() {
         String filePath = "./src/main/resources/dummyContent.txt";
         StringBuilder stringBuilder = new StringBuilder();
