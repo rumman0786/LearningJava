@@ -1,8 +1,10 @@
 package module.export.pdf;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfName;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -139,6 +141,42 @@ public class PdfITextGenerator {
 
             System.out.println(String.format("{%s} PDF written successfully.", filePath));
         } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createMemoryPDF(String filePath, String paragraphContent) {
+        Document document = new Document();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try(FileOutputStream fos = new FileOutputStream(filePath)) {
+
+            PdfWriter.getInstance(document, baos);
+
+            document.open();
+            document.add(new Paragraph(paragraphContent));
+            document.close();
+
+            fos.write(baos.toByteArray());
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createVersionedPDF(String filePath, String paragraphContent, PdfName version) {
+        Document document = new Document();
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, fileOutputStream);
+            pdfWriter.setPdfVersion(version);
+
+            document.open();
+            document.add(new Paragraph(paragraphContent));
+            document.close();
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
     }

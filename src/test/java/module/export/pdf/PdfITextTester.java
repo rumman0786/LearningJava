@@ -1,5 +1,7 @@
 package module.export.pdf;
 
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -80,6 +82,22 @@ public class PdfITextTester {
     public void createTopBottomMarginedPDFTest() {
         String filePath = "/home/rumman/pdf/testTopBottomMarginedDocument.pdf";
         PdfITextGenerator.createTopBottomMarginedPDF(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void createMemoryPDFTest() {
+        String filePath = "/home/rumman/pdf/testMemoryPDFDocument.pdf";
+        PdfITextGenerator.createMemoryPDF(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void createVersionedPDFTest() {
+        String filePath = "/home/rumman/pdf/testVERSION_1_7Document.pdf";
+        PdfITextGenerator.createVersionedPDF(filePath, getContent(), PdfWriter.PDF_VERSION_1_7);
 
         Assert.assertTrue(new File(filePath).exists());
     }
