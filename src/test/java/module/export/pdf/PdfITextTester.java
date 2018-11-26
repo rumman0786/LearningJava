@@ -102,6 +102,22 @@ public class PdfITextTester {
         Assert.assertTrue(new File(filePath).exists());
     }
 
+    @Test
+    public void pdfContentByteExampleTest() {
+        String filePath = "/home/rumman/pdf/testPdfContentByteDocument.pdf";
+        PdfITextGenerator.pdfContentByteExample(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
+    @Test
+    public void pdfContentByteWithColumnExampleTest() {
+        String filePath = "/home/rumman/pdf/testPdfContentByteColumnDocument.pdf";
+        PdfITextGenerator.pdfContentByteWithColumnExample(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
     private String getContent() {
         String filePath = "./src/main/resources/dummyContent.txt";
         StringBuilder stringBuilder = new StringBuilder();

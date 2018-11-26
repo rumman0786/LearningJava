@@ -1,8 +1,7 @@
 package module.export.pdf;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfName;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -173,6 +172,55 @@ public class PdfITextGenerator {
 
             document.open();
             document.add(new Paragraph(paragraphContent));
+            document.close();
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void pdfContentByteExample(String filePath, String paragraphContent) {
+        Document document = new Document();
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, fileOutputStream);
+            pdfWriter.setCompressionLevel(0);
+
+            document.open();
+
+            PdfContentByte canvas = pdfWriter.getDirectContentUnder();
+            canvas.saveState();
+            canvas.beginText();
+            canvas.moveText(36, 788);
+            canvas.setFontAndSize(BaseFont.createFont(), 12);
+            canvas.showText(paragraphContent);
+            canvas.endText();
+            canvas.restoreState();
+
+            document.close();
+
+            System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void pdfContentByteWithColumnExample(String filePath, String paragraphContent) {
+        Document document = new Document();
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, fileOutputStream);
+            pdfWriter.setCompressionLevel(0);
+
+            document.open();
+
+            Phrase phrase = new Phrase(paragraphContent);
+
+            PdfContentByte pdfContentByte = pdfWriter.getDirectContentUnder();
+
+            ColumnText.showTextAligned(pdfContentByte, Element.ALIGN_LEFT, phrase, 36, 788, 0);
+
             document.close();
 
             System.out.println(String.format("{%s} PDF written successfully.", filePath));
