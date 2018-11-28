@@ -118,6 +118,14 @@ public class PdfITextTester {
         Assert.assertTrue(new File(filePath).exists());
     }
 
+    @Test
+    public void zippedPdfContentTest() {
+        String filePath = "/home/rumman/pdf/testZippedPdfContent.zip";
+        PdfITextGenerator.getZippedPdfContent(filePath, getContent());
+
+        Assert.assertTrue(new File(filePath).exists());
+    }
+
     private String getContent() {
         String filePath = "./src/main/resources/dummyContent.txt";
         StringBuilder stringBuilder = new StringBuilder();

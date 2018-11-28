@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author rumman
@@ -224,6 +226,31 @@ public class PdfITextGenerator {
             document.close();
 
             System.out.println(String.format("{%s} PDF written successfully.", filePath));
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getZippedPdfContent(String filePath, String paragraphContent) {
+
+        try(ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(filePath))) {
+
+            for (int i = 1; i <= 3; i++) {
+                ZipEntry entry = new ZipEntry("hello_" + i + ".pdf");
+                zipOutputStream.putNextEntry(entry);
+
+                Document document = new Document();
+
+                PdfWriter writer = PdfWriter.getInstance(document, zipOutputStream);
+                writer.setCloseStream(false);
+
+                document.open();
+                document.add(new Paragraph(paragraphContent));
+                document.close();
+
+                zipOutputStream.closeEntry();
+            }
+
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
