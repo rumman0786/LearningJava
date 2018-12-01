@@ -251,7 +251,7 @@ public class PdfITextGenerator {
                 zipOutputStream.closeEntry();
             }
 
-        } catch (DocumentException | IOException e) {
+          } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
     }
