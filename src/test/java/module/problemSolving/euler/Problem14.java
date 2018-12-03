@@ -31,7 +31,6 @@ public class Problem14 {
         }
 
         System.out.println(maxcollatzLengthCandidate + " : " + maxcollatzLength);
-
     }
 
     public int getCollatzLength(int subject) {
@@ -49,6 +48,11 @@ public class Problem14 {
             length++;
 
             operand = (operand % 2 == 0) ? (operand / 2) : (3 * operand + 1);
+
+            if (operand <=1000000 && collatzLengthMemory[(int)operand] > 0 ){
+                length += collatzLengthMemory[(int)operand];
+                break;
+            }
 
             if (operand == 1) {
                 break;
