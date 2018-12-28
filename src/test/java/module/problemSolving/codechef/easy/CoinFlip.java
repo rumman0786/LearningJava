@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
  */
 public class CoinFlip {
 
-    private static final int HEAD = 1;
-
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int testCount = Integer.parseInt(reader.readLine());
@@ -27,24 +25,12 @@ public class CoinFlip {
                     int numberOfCoins = Integer.parseInt(inputs[1]);
                     int coinSideToCount = Integer.parseInt(inputs[2]);
 
-                    int heads = 0;
-                    int tails = 0;
-
-                    int halfOfNumberOfCouns = numberOfCoins / 2;
-                    if (numberOfCoins % 2 == 0) {
-                        heads = halfOfNumberOfCouns;
-                        tails = halfOfNumberOfCouns;
-                    } else {
-                        if (coinInitialSide == HEAD) {
-                            heads = halfOfNumberOfCouns;
-                            tails = halfOfNumberOfCouns + 1;
-                        } else {
-                            tails = halfOfNumberOfCouns;
-                            heads = halfOfNumberOfCouns + 1;
-                        }
+                    int result = numberOfCoins / 2;
+                    if (numberOfCoins % 2 == 1 && coinInitialSide != coinSideToCount) {
+                        result = result + 1;
                     }
 
-                    builder.append(coinSideToCount == HEAD ? heads : tails)
+                    builder.append(result)
                             .append(System.lineSeparator());
                 }
             }
