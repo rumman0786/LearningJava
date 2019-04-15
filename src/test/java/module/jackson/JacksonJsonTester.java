@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author rumman
@@ -36,6 +38,14 @@ public class JacksonJsonTester {
 
             Student studentObjFromJson= mapper.readValue(studentObjJsonStr, Student.class);
             System.out.println(studentObjFromJson);
+
+            Map<String, Object> otherValues = new HashMap<>();
+            otherValues.put("student", studentObj);
+            otherValues.put("work", "Therap BD Ltd");
+            otherValues.put("hobby", "Table Tennis");
+
+            String jsonFromMap = mapper.writeValueAsString(otherValues);
+            System.out.println(jsonFromMap);
         }
         catch (JsonParseException e) { e.printStackTrace();}
         catch (JsonMappingException e) { e.printStackTrace(); }
