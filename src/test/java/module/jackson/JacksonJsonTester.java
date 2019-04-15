@@ -1,11 +1,10 @@
 package module.jackson;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.parser.JSONParser;
 
 
 import java.io.ByteArrayOutputStream;
@@ -13,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * @author rumman
@@ -57,6 +57,8 @@ public class JacksonJsonTester {
             jsonTester.iterateJsonNode();
 
             jsonTester.rawJsonCreateExample();
+
+            jsonTester.jsonParserExample();
 
         } catch (JsonParseException e) {
             e.printStackTrace();
@@ -138,5 +140,65 @@ public class JacksonJsonTester {
             e.printStackTrace();
         }
 
+    }
+
+    private void jsonParserExample() {
+        String jsonString = "{\"name\":\"Mahesh Kumar\",  \"age\":21,\"verified\":false,\"marks\": [100,90,85]}";
+
+        JsonFactory factory = new JsonFactory();
+        try {
+            JsonParser parser = factory.createParser(jsonString);
+
+            System.out.println();
+            System.out.println("JSON Token Workflow");
+
+            while (!parser.isClosed()) {
+                JsonToken jsonToken = parser.nextToken();
+
+                System.out.println("jsonToken = " + jsonToken);
+            }
+
+
+            System.out.println();
+            System.out.println("JSON Parsing");
+
+            parser = factory.createParser(jsonString);
+
+            while (!parser.isClosed()) {
+                JsonToken jsonToken = parser.nextToken();
+
+                if (JsonToken.FIELD_NAME.equals(jsonToken)) {
+                    String fieldKey = parser.getCurrentName();
+                    System.out.println(fieldKey);
+
+                    jsonToken = parser.nextToken();
+
+                    if ("name".equals(fieldKey)) {
+                        System.out.println(parser.getValueAsString());
+                    }
+
+                    else if ("age".equals(fieldKey)) {
+                        System.out.println(parser.getValueAsInt());
+                    }
+
+                    else if ("verified".equals(fieldKey)) {
+                        System.out.println(parser.getValueAsBoolean());
+                    }
+
+                    else if ("marks".equals(fieldKey)) {
+                        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+                        while (parser.nextToken() != JsonToken.END_ARRAY) {
+                            joiner.add(String.valueOf(parser.getValueAsInt()));
+                        }
+
+                        System.out.println(joiner.toString());
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
